@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OBS Webcam Zoom: Smooth Zoom to Any Point with Your Mouse | Free Dock</title>
+  <meta name="description" content="Free OBS Studio dock that zooms your webcam smoothly into the exact point you hold the mouse on. No plugins, works through the built-in obs-websocket. Zoom in, zoom out, pan, sync across all scenes.">
+  <link rel="canonical" href="https://siarheikryutsou.github.io/webcam-zoom-obs/">
+  <link rel="alternate" hreflang="en" href="https://siarheikryutsou.github.io/webcam-zoom-obs/">
+  <link rel="alternate" hreflang="ru" href="https://siarheikryutsou.github.io/webcam-zoom-obs/ru/">
+  <link rel="alternate" hreflang="x-default" href="https://siarheikryutsou.github.io/webcam-zoom-obs/">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f1117">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Webcam Zoom for OBS">
+  <meta property="og:title" content="OBS Webcam Zoom: smooth zoom to any point with your mouse">
+  <meta property="og:description" content="Hold the mouse on your webcam preview and OBS smoothly zooms into that spot. Free, no plugins, obs-websocket.">
+  <meta property="og:url" content="https://siarheikryutsou.github.io/webcam-zoom-obs/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f8cff'/%3E%3Crect x='8' y='8' width='16' height='12' rx='2' fill='none' stroke='white' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='14' r='2.5' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Webcam Zoom for OBS",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "OBS Studio custom browser dock that smoothly zooms the webcam into the point you hold the mouse on. Uses the built-in obs-websocket, no plugins.",
+        "url": "https://siarheikryutsou.github.io/webcam-zoom-obs/",
+        "downloadUrl": "https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip",
+        "softwareRequirements": "OBS Studio 28 or newer",
+        "inLanguage": ["en", "ru"]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to add smooth webcam zoom to OBS Studio",
+        "totalTime": "PT5M",
+        "step": [
+          { "@type": "HowToStep", "name": "Download", "text": "Download the ZIP from GitHub and unpack it to a permanent folder, for example C:\\obs-tools\\webcam-zoom-obs." },
+          { "@type": "HowToStep", "name": "Enable WebSocket server", "text": "In OBS open Tools → WebSocket Server Settings, enable the server and copy the password." },
+          { "@type": "HowToStep", "name": "Add the dock", "text": "In OBS open Docks → Custom Browser Docks, add a dock named Webcam Zoom with the URL file:///C:/obs-tools/webcam-zoom-obs/index.html." },
+          { "@type": "HowToStep", "name": "Connect", "text": "In the dock enter the password, click Connect and pick your webcam. Hold the left mouse button on the preview to zoom." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Do I need to install an OBS plugin?", "acceptedAnswer": { "@type": "Answer", "text": "No. It is a web page loaded as an OBS custom browser dock and talks to the obs-websocket server that is built into OBS 28 and newer." } },
+          { "@type": "Question", "name": "Why can't I just click on the webcam in the OBS preview?", "acceptedAnswer": { "@type": "Answer", "text": "OBS preview does not pass mouse clicks to sources. A custom browser dock is a normal interactive web page inside OBS, so the mouse works there." } },
+          { "@type": "Question", "name": "Does it work when the webcam is in several scenes?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The dock finds every scene item of the same webcam source, including inside groups, and zooms all of them in sync." } },
+          { "@type": "Question", "name": "How do I undo the changes?", "acceptedAnswer": { "@type": "Answer", "text": "Click Restore original view in the dock settings. It returns the original crop and bounding box to every scene item the dock touched." } }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="./"><span class="brand-dot" aria-hidden="true"></span>Webcam Zoom</a>
+      <nav aria-label="Main">
+        <a class="hide-sm" href="#install">Install</a>
+        <a class="hide-sm" href="#usage">How to use</a>
+        <a class="hide-sm" href="#faq">FAQ</a>
+        <a class="lang" href="ru/" hreflang="ru" lang="ru">Русский</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" style="border-top:0">
+      <ul class="badges">
+        <li>Free</li><li>No plugins</li><li>OBS 28+</li><li>Windows · macOS · Linux</li>
+      </ul>
+      <h1>Smooth <span>webcam zoom</span> in OBS: hold the mouse and zoom to that point</h1>
+      <p class="lead">Webcam Zoom is a small panel inside OBS Studio. You see your camera picture in it, hold the left mouse button on a face, a hand or an object, and the webcam in your stream or recording smoothly zooms right there. Release it and the zoom stays. Right button zooms out.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip">⬇ Download ZIP</a>
+        <a class="btn" href="#install">Install in 5 minutes</a>
+        <a class="btn" href="https://github.com/siarheikryutsou/webcam-zoom-obs">GitHub</a>
+      </div>
+      <img class="hero-img" src="assets/hero.svg" width="1200" height="560" alt="Webcam Zoom dock in OBS: the mouse is held on the camera preview, the blue frame shows the zoom area, and the OBS scene shows the zoomed webcam">
+    </section>
+
+    <section id="what">
+      <h2>What is it and who is it for?</h2>
+      <p>If you stream, record tutorials, product reviews, cooking or crafts, sometimes you want the viewer to look <strong>closer</strong>: at an object in your hands, at your face, at a detail on the table. Usually that means a second camera or fiddling with crop settings during the stream. Webcam Zoom turns it into one mouse gesture.</p>
+      <div class="grid">
+        <div class="card"><div class="icon" aria-hidden="true">🎯</div><h3>Zoom to a point</h3><p>Hold the left button where you want to look. The longer you hold, the closer it gets.</p></div>
+        <div class="card"><div class="icon" aria-hidden="true">🌊</div><h3>Smooth like a camera operator</h3><p>All movements are animated. Speed, maximum zoom and smoothness are adjustable sliders.</p></div>
+        <div class="card"><div class="icon" aria-hidden="true">🎬</div><h3>Every scene at once</h3><p>Fullscreen camera, small camera in a corner: the zoom is applied to all of them in sync.</p></div>
+        <div class="card"><div class="icon" aria-hidden="true">🧩</div><h3>No plugins</h3><p>Just a web page in an OBS dock. It uses obs-websocket, which is already built into OBS.</p></div>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>How to install (step by step)</h2>
+      <p>You need <strong>OBS Studio 28 or newer</strong> (Help → About shows the version). Nothing else.</p>
+      <ol class="steps">
+        <li>
+          <h3>Download and unpack</h3>
+          <p>Click <a href="https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip">Download ZIP</a>. Unpack it to a folder you won't delete, for example <code>C:\obs-tools\webcam-zoom-obs</code>. Inside there must be a file <code>index.html</code>.</p>
+        </li>
+        <li>
+          <h3>Turn on the WebSocket server in OBS</h3>
+          <p>In OBS: <strong>Tools → WebSocket Server Settings</strong>. Tick <strong>Enable WebSocket server</strong>. Click <strong>Show Connect Info</strong> and copy the <strong>password</strong>. The port is usually <code>4455</code>. Click OK.</p>
+        </li>
+        <li>
+          <h3>Add the dock</h3>
+          <p>In OBS: <strong>Docks → Custom Browser Docks…</strong>. In the empty row type the name <code>Webcam Zoom</code> and the URL to the file, with forward slashes:</p>
+          <pre><code>file:///C:/obs-tools/webcam-zoom-obs/index.html</code></pre>
+          <p>Click Apply. A new panel appears. Drag it wherever you like.</p>
+          <p class="note">On macOS / Linux the URL looks like <code>file:///Users/you/obs-tools/webcam-zoom-obs/index.html</code>.</p>
+        </li>
+        <li>
+          <h3>Connect</h3>
+          <p>In the panel, the address is already <code>ws://127.0.0.1:4455</code>. Paste the password and click <strong>Connect</strong> (<em lang="ru">«Подключить»</em>). The status turns green: <em>online</em>.</p>
+          <p class="note">The panel interface is currently in Russian. On this page button names are given with their Russian labels in brackets.</p>
+        </li>
+        <li>
+          <h3>Pick your camera</h3>
+          <p>Choose any scene and the item with your webcam (it is usually selected automatically). The camera picture appears in the panel. Done. Next time the panel connects by itself.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="usage">
+      <h2>How to use</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Action</th><th>What happens</th></tr></thead>
+          <tbody>
+            <tr><td>Hold <kbd>Left mouse button</kbd> on the picture</td><td>Zooms in smoothly towards the cursor. Move the mouse while holding and the zoom follows.</td></tr>
+            <tr><td>Release the button</td><td>The zoom stays where it is.</td></tr>
+            <tr><td>Hold <kbd>Right mouse button</kbd></td><td>Zooms out smoothly, also following the cursor.</td></tr>
+            <tr><td>Drag the <kbd>✥</kbd> handle in the corner of the blue frame</td><td>Moves the visible area without changing the zoom.</td></tr>
+            <tr><td><kbd>Mouse wheel</kbd></td><td>Zoom in or out step by step.</td></tr>
+            <tr><td><kbd>Double-click</kbd></td><td>Smoothly back to the full picture.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The panel always shows the <strong>whole</strong> camera picture. The blue frame is what your viewers see right now.</p>
+      <h3>Settings</h3>
+      <p>Click the panel header to open settings: <strong>Speed</strong> (<span lang="ru">«Скорость»</span>, how fast the zoom grows while you hold), <strong>Max zoom</strong> (<span lang="ru">«Макс. зум»</span>, up to ×10), <strong>Smoothness</strong> (<span lang="ru">«Плавность»</span>, how softly the picture catches up), and <strong>Restore original view</strong> (<span lang="ru">«Вернуть исходный вид»</span>).</p>
+      <h3>Several scenes</h3>
+      <p>The same webcam can be fullscreen in one scene and small in a corner in another. The panel finds <strong>all</strong> of them (including in groups and nested scenes) and zooms them together. The small camera stays small, only the picture inside it gets closer. New scenes with the camera are picked up automatically.</p>
+      <p class="note">When the panel takes over a camera item, it replaces that item's own crop and bounding box. <strong>Restore original view</strong> brings them back for every item.</p>
+    </section>
+
+    <section id="how">
+      <h2>How it works (for the curious)</h2>
+      <p>OBS preview does not pass mouse clicks into sources, and a Browser Source only accepts the mouse through a separate “Interact” window. A <strong>custom browser dock</strong> is a normal interactive web page inside OBS, so Webcam Zoom lives there.</p>
+      <p>The dock talks to OBS through <strong>obs-websocket</strong> (built in since OBS 28). It never opens your camera by itself: OBS keeps it. The preview in the dock is a stream of screenshots of the camera source. Zoom is done by changing the <strong>crop</strong> of the camera scene item, while a bounding box keeps its size on the canvas. All the animation runs in the dock.</p>
+      <p class="note ok">Everything stays on your computer. The dock connects only to <code>127.0.0.1</code>, your own OBS.</p>
+    </section>
+
+    <section id="faq">
+      <h2>FAQ and troubleshooting</h2>
+      <details class="faq"><summary>The panel says “Failed to connect” (<span lang="ru">«Не удалось подключиться»</span>)</summary><p>Check that the WebSocket server is enabled in Tools → WebSocket Server Settings, that the port is 4455 and the password is exactly the one shown in Show Connect Info.</p></details>
+      <details class="faq"><summary>The panel is empty / white</summary><p>The file path in the dock URL is wrong. It must start with <code>file:///</code>, use forward slashes and point to <code>index.html</code> inside the unpacked folder.</p></details>
+      <details class="faq"><summary>The preview is black or the zoom does nothing</summary><p>Make sure the right item is selected in the settings and the camera is actually working in OBS. Press ⟳ to refresh the lists.</p></details>
+      <details class="faq"><summary>Zoom works in one scene but not in another</summary><p>Press ⟳ in the settings. The panel will rescan all scenes and pick up every copy of the webcam.</p></details>
+      <details class="faq"><summary>How do I remove it?</summary><p>Click Restore original view, then remove the dock in Docks → Custom Browser Docks and delete the folder.</p></details>
+      <details class="faq"><summary>Is it an OBS plugin? Is it safe?</summary><p>It's not a plugin, it's a local HTML page. It does not send anything to the internet and does not open your webcam directly.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Webcam Zoom for OBS · <a href="https://github.com/siarheikryutsou/webcam-zoom-obs">Source code on GitHub</a> · <a href="ru/" hreflang="ru" lang="ru">Русская версия</a></p>
+      <p>OBS and OBS Studio are trademarks of their respective owners. This project is not affiliated with the OBS Project.</p>
+    </div>
+  </footer>
+</body>
+</html>

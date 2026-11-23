@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="t">
+  <title id="t">Webcam Zoom for OBS: hold the mouse on the dock preview to zoom the webcam in the scene</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#151a27"/>
+      <stop offset="1" stop-color="#0e1119"/>
+    </linearGradient>
+    <linearGradient id="cam" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a4a6b"/>
+      <stop offset="1" stop-color="#22293b"/>
+    </linearGradient>
+    <clipPath id="outClip"><rect x="560" y="70" width="600" height="338" rx="10"/></clipPath>
+    <clipPath id="padClip"><rect x="60" y="182" width="400" height="225" rx="8"/></clipPath>
+    <g id="person">
+      <!-- simple person silhouette in a 400x225 frame -->
+      <rect width="400" height="225" fill="url(#cam)"/>
+      <rect x="0" y="150" width="400" height="75" fill="#1a2030"/>
+      <circle cx="210" cy="92" r="38" fill="#e3b693"/>
+      <path d="M150 225 C150 160 270 160 270 225 Z" fill="#4f8cff"/>
+      <circle cx="197" cy="88" r="4" fill="#2b2b2b"/>
+      <circle cx="223" cy="88" r="4" fill="#2b2b2b"/>
+      <path d="M198 106 Q210 114 222 106" stroke="#7a4b35" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <rect x="300" y="120" width="60" height="40" rx="4" fill="#7cc4ff" opacity=".35"/>
+    </g>
+  </defs>
+
+  <rect width="1200" height="560" rx="18" fill="url(#bg)"/>
+
+  <!-- Dock -->
+  <rect x="40" y="70" width="440" height="420" rx="12" fill="#1e1f29" stroke="#3b3c4a"/>
+  <rect x="52" y="84" width="416" height="34" rx="6" fill="#272833" stroke="#3b3c4a"/>
+  <text x="66" y="106" fill="#dfe1ea" font-family="Segoe UI, system-ui, sans-serif" font-size="15" font-weight="600">▸ Webcam Zoom</text>
+  <rect x="226" y="93" width="58" height="18" rx="9" fill="#1f5f3a"/>
+  <text x="255" y="106" fill="#dfe1ea" font-family="Segoe UI, system-ui, sans-serif" font-size="11" text-anchor="middle">online</text>
+  <rect x="378" y="90" width="80" height="22" rx="4" fill="#1e1f29" stroke="#3b3c4a"/>
+  <text x="418" y="105" fill="#dfe1ea" font-family="Segoe UI, system-ui, sans-serif" font-size="11" text-anchor="middle">●  ●  ●</text>
+
+  <g clip-path="url(#padClip)">
+    <use href="#person" x="60" y="182"/>
+    <!-- dim outside zoom rect -->
+    <path d="M60 182 h400 v225 h-400 Z M200 202 v113 h200 v-113 Z" fill="#000" opacity=".4" fill-rule="evenodd"/>
+  </g>
+  <rect x="60" y="182" width="400" height="225" rx="8" fill="none" stroke="#3b3c4a"/>
+  <rect x="200" y="202" width="200" height="113" fill="none" stroke="#4f8cff" stroke-width="3"/>
+  <rect x="200" y="202" width="22" height="22" fill="#4f8cff"/>
+  <text x="211" y="218" fill="#fff" font-size="15" text-anchor="middle">✥</text>
+
+  <!-- cursor -->
+  <g transform="translate(300 252)">
+    <circle r="22" fill="#4f8cff" opacity=".25"/>
+    <circle r="12" fill="#4f8cff" opacity=".35"/>
+    <path d="M0 0 L0 26 L7 19 L12 30 L17 28 L12 17 L22 17 Z" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  </g>
+
+  <rect x="60" y="422" width="400" height="52" rx="6" fill="#272833"/>
+  <text x="260" y="444" fill="#dfe1ea" font-family="Segoe UI, system-ui, sans-serif" font-size="13" text-anchor="middle">LMB ⬆ zoom · RMB ⬇ zoom out · ✥ move</text>
+  <text x="260" y="463" fill="#8a8ca0" font-family="Segoe UI, system-ui, sans-serif" font-size="12" text-anchor="middle">wheel · double-click = reset</text>
+
+  <!-- arrow -->
+  <path d="M492 250 C520 250 528 240 548 240" stroke="#4f8cff" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="2 10"/>
+  <path d="M540 230 L556 240 L540 250 Z" fill="#4f8cff"/>
+
+  <!-- OBS output (zoomed) -->
+  <rect x="556" y="66" width="608" height="346" rx="12" fill="#0b0d13" stroke="#3b3c4a"/>
+  <g clip-path="url(#outClip)">
+    <!-- zoom ×2 around rect (200..400, 202..315 in pad coords => 140..340, 20..133 in frame) -->
+    <g transform="translate(560 70) scale(3) translate(-140 -20)">
+      <use href="#person"/>
+    </g>
+  </g>
+  <rect x="580" y="90" width="64" height="24" rx="5" fill="#e5484d"/>
+  <text x="612" y="107" fill="#fff" font-family="Segoe UI, system-ui, sans-serif" font-size="13" font-weight="700" text-anchor="middle">LIVE</text>
+  <text x="860" y="450" fill="#dfe1ea" font-family="Segoe UI, system-ui, sans-serif" font-size="18" font-weight="600" text-anchor="middle">OBS scene · smooth zoom</text>
+  <text x="860" y="476" fill="#8a8ca0" font-family="Segoe UI, system-ui, sans-serif" font-size="14" text-anchor="middle">obs-websocket · no plugins</text>
+</svg>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Зум веб-камеры в OBS: плавное приближение мышкой в любую точку | Бесплатно</title>
+  <meta name="description" content="Бесплатная панель для OBS Studio: зажми мышку на картинке веб-камеры, и камера в эфире плавно приблизится к этой точке. Без плагинов, через встроенный obs-websocket. Зум, отзум, перемещение, все сцены сразу.">
+  <link rel="canonical" href="https://siarheikryutsou.github.io/webcam-zoom-obs/ru/">
+  <link rel="alternate" hreflang="en" href="https://siarheikryutsou.github.io/webcam-zoom-obs/">
+  <link rel="alternate" hreflang="ru" href="https://siarheikryutsou.github.io/webcam-zoom-obs/ru/">
+  <link rel="alternate" hreflang="x-default" href="https://siarheikryutsou.github.io/webcam-zoom-obs/">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f1117">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Webcam Zoom для OBS">
+  <meta property="og:title" content="Зум веб-камеры в OBS: плавное приближение мышкой в любую точку">
+  <meta property="og:description" content="Зажми мышку на превью камеры, и OBS плавно приблизит эту точку. Бесплатно, без плагинов, через obs-websocket.">
+  <meta property="og:url" content="https://siarheikryutsou.github.io/webcam-zoom-obs/ru/">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f8cff'/%3E%3Crect x='8' y='8' width='16' height='12' rx='2' fill='none' stroke='white' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='14' r='2.5' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Webcam Zoom для OBS",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Панель (браузерный док) для OBS Studio, которая плавно приближает веб-камеру к точке, где зажата мышь. Работает через встроенный obs-websocket, без плагинов.",
+        "url": "https://siarheikryutsou.github.io/webcam-zoom-obs/ru/",
+        "downloadUrl": "https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip",
+        "softwareRequirements": "OBS Studio 28 или новее",
+        "inLanguage": "ru"
+      },
+      {
+        "@type": "HowTo",
+        "name": "Как сделать плавный зум веб-камеры в OBS Studio",
+        "totalTime": "PT5M",
+        "step": [
+          { "@type": "HowToStep", "name": "Скачать", "text": "Скачайте ZIP с GitHub и распакуйте в постоянную папку, например C:\\obs-tools\\webcam-zoom-obs." },
+          { "@type": "HowToStep", "name": "Включить WebSocket-сервер", "text": "В OBS откройте Сервис → Настройки сервера WebSocket, включите сервер и скопируйте пароль." },
+          { "@type": "HowToStep", "name": "Добавить док", "text": "В OBS откройте Доки → Пользовательские браузерные доки, добавьте док Webcam Zoom с адресом file:///C:/obs-tools/webcam-zoom-obs/index.html." },
+          { "@type": "HowToStep", "name": "Подключиться", "text": "В доке введите пароль, нажмите «Подключить» и выберите камеру. Зажмите левую кнопку мыши на превью, чтобы приблизить." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Нужно ли ставить плагин для OBS?", "acceptedAnswer": { "@type": "Answer", "text": "Нет. Это веб-страница, которая открывается как пользовательский браузерный док OBS и общается со встроенным в OBS 28+ сервером obs-websocket." } },
+          { "@type": "Question", "name": "Почему нельзя просто кликнуть по камере в превью OBS?", "acceptedAnswer": { "@type": "Answer", "text": "Превью OBS не передаёт клики мыши в источники. Браузерный док — обычная интерактивная страница внутри OBS, поэтому мышь там работает." } },
+          { "@type": "Question", "name": "Работает ли зум, если камера есть в нескольких сценах?", "acceptedAnswer": { "@type": "Answer", "text": "Да. Панель находит все элементы с этой веб-камерой, в том числе внутри групп, и приближает их синхронно." } },
+          { "@type": "Question", "name": "Как вернуть всё как было?", "acceptedAnswer": { "@type": "Answer", "text": "В настройках панели нажмите «Вернуть исходный вид». Исходная обрезка и рамка вернутся у всех элементов, которые трогала панель." } }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="./"><span class="brand-dot" aria-hidden="true"></span>Webcam Zoom</a>
+      <nav aria-label="Меню">
+        <a class="hide-sm" href="#install">Установка</a>
+        <a class="hide-sm" href="#usage">Как пользоваться</a>
+        <a class="hide-sm" href="#faq">Вопросы</a>
+        <a class="lang" href="../" hreflang="en" lang="en">English</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" style="border-top:0">
+      <ul class="badges">
+        <li>Бесплатно</li><li>Без плагинов</li><li>OBS 28+</li><li>Windows · macOS · Linux</li>
+      </ul>
+      <h1>Плавный <span>зум веб-камеры</span> в OBS: зажал мышку и приблизил эту точку</h1>
+      <p class="lead">Webcam Zoom — маленькая панель внутри OBS Studio. В ней видна картинка с камеры. Зажимаешь левую кнопку мыши на лице, руке или предмете, и веб-камера в стриме или записи плавно приближается именно туда. Отпустил, и зум остаётся. Правая кнопка отдаляет.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip">⬇ Скачать ZIP</a>
+        <a class="btn" href="#install">Установить за 5 минут</a>
+        <a class="btn" href="https://github.com/siarheikryutsou/webcam-zoom-obs">GitHub</a>
+      </div>
+      <img class="hero-img" src="../assets/hero.svg" width="1200" height="560" alt="Панель Webcam Zoom в OBS: мышь зажата на превью камеры, синяя рамка показывает область зума, а в сцене OBS камера приближена">
+    </section>
+
+    <section id="what">
+      <h2>Что это и кому нужно?</h2>
+      <p>Если вы стримите, записываете уроки, обзоры товаров, готовку или рукоделие, иногда нужно, чтобы зритель посмотрел <strong>поближе</strong>: на предмет в руках, на лицо, на деталь на столе. Обычно для этого ставят вторую камеру или крутят обрезку в настройках прямо во время эфира. Webcam Zoom превращает это в одно движение мышкой.</p>
+      <div class="grid">
+        <div class="card"><div class="icon" aria-hidden="true">🎯</div><h3>Зум в точку</h3><p>Зажмите левую кнопку там, куда нужно посмотреть. Чем дольше держите, тем ближе.</p></div>
+        <div class="card"><div class="icon" aria-hidden="true">🌊</div><h3>Плавно, как у оператора</h3><p>Все движения анимированы. Скорость, максимальный зум и плавность настраиваются ползунками.</p></div>
+        <div class="card"><div class="icon" aria-hidden="true">🎬</div><h3>Все сцены сразу</h3><p>Камера на весь экран или маленькая в углу: зум применяется ко всем одновременно.</p></div>
+        <div class="card"><div class="icon" aria-hidden="true">🧩</div><h3>Без плагинов</h3><p>Просто веб-страница в доке OBS. Работает через obs-websocket, который уже встроен в OBS.</p></div>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Как установить (по шагам)</h2>
+      <p>Нужна только <strong>OBS Studio 28 или новее</strong> (версия видна в Справка → О программе).</p>
+      <ol class="steps">
+        <li>
+          <h3>Скачать и распаковать</h3>
+          <p>Нажмите <a href="https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip">Скачать ZIP</a>. Распакуйте в папку, которую не удалите, например <code>C:\obs-tools\webcam-zoom-obs</code>. Внутри должен лежать файл <code>index.html</code>.</p>
+        </li>
+        <li>
+          <h3>Включить WebSocket-сервер в OBS</h3>
+          <p>В OBS: <strong>Сервис → Настройки сервера WebSocket</strong>. Поставьте галочку <strong>Включить сервер WebSocket</strong>. Нажмите <strong>Показать сведения о подключении</strong> и скопируйте <strong>пароль</strong>. Порт обычно <code>4455</code>. Нажмите ОК.</p>
+          <p class="note">В разных версиях OBS меню называется «Сервис» или «Инструменты» (Tools) — это одно и то же.</p>
+        </li>
+        <li>
+          <h3>Добавить док</h3>
+          <p>В OBS: <strong>Доки → Пользовательские браузерные доки…</strong>. В пустой строке введите имя <code>Webcam Zoom</code> и адрес файла, с прямыми слэшами:</p>
+          <pre><code>file:///C:/obs-tools/webcam-zoom-obs/index.html</code></pre>
+          <p>Нажмите «Применить». Появится новая панель, её можно перетащить куда удобно.</p>
+          <p class="note">На macOS / Linux адрес выглядит так: <code>file:///Users/имя/obs-tools/webcam-zoom-obs/index.html</code>.</p>
+        </li>
+        <li>
+          <h3>Подключиться</h3>
+          <p>В панели уже стоит адрес <code>ws://127.0.0.1:4455</code>. Вставьте пароль и нажмите <strong>«Подключить»</strong>. Статус станет зелёным: <em>online</em>.</p>
+        </li>
+        <li>
+          <h3>Выбрать камеру</h3>
+          <p>Выберите любую сцену и элемент с веб-камерой (обычно он выбирается сам). В панели появится картинка с камеры. Готово. В следующий раз панель подключится сама.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="usage">
+      <h2>Как пользоваться</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Действие</th><th>Что происходит</th></tr></thead>
+          <tbody>
+            <tr><td>Держать <kbd>левую кнопку мыши</kbd> на картинке</td><td>Плавно приближает к курсору. Если вести мышь с зажатой кнопкой, зум следует за ней.</td></tr>
+            <tr><td>Отпустить кнопку</td><td>Зум остаётся на месте.</td></tr>
+            <tr><td>Держать <kbd>правую кнопку мыши</kbd></td><td>Плавно отдаляет, тоже следуя за курсором.</td></tr>
+            <tr><td>Тянуть ручку <kbd>✥</kbd> в углу синей рамки</td><td>Двигает видимую область, не меняя зум.</td></tr>
+            <tr><td><kbd>Колесо мыши</kbd></td><td>Приблизить или отдалить по шагам.</td></tr>
+            <tr><td><kbd>Двойной клик</kbd></td><td>Плавный возврат к общему плану.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Панель всегда показывает <strong>весь</strong> кадр с камеры, а синяя рамка — то, что прямо сейчас видят зрители.</p>
+      <h3>Настройки</h3>
+      <p>Нажмите на заголовок панели, чтобы открыть настройки: <strong>Скорость</strong> (как быстро растёт зум, пока держите кнопку), <strong>Макс. зум</strong> (до ×10), <strong>Плавность</strong> (насколько мягко картинка догоняет) и кнопка <strong>«Вернуть исходный вид»</strong>.</p>
+      <h3>Несколько сцен</h3>
+      <p>Одна и та же веб-камера может быть на весь экран в одной сцене и маленькой в углу в другой. Панель находит <strong>все</strong> такие элементы (в том числе в группах и вложенных сценах) и приближает их вместе. Маленькая камера остаётся маленькой, просто картинка в ней становится ближе. Новые сцены с камерой подхватываются автоматически.</p>
+      <p class="note">Когда панель берёт камеру под управление, она заменяет собственную обрезку и рамку (bounding box) этого элемента. Кнопка <strong>«Вернуть исходный вид»</strong> возвращает их всем элементам.</p>
+    </section>
+
+    <section id="how">
+      <h2>Как это работает (для любопытных)</h2>
+      <p>Превью OBS не передаёт клики мыши в источники, а Browser Source принимает мышь только через отдельное окно «Взаимодействовать». <strong>Пользовательский браузерный док</strong> — обычная интерактивная веб-страница внутри OBS, поэтому Webcam Zoom живёт там.</p>
+      <p>Док общается с OBS через <strong>obs-websocket</strong> (встроен начиная с OBS 28). Саму камеру он не открывает, её держит OBS. Превью в доке — поток скриншотов источника камеры. Зум делается изменением <strong>обрезки (crop)</strong> элемента сцены с камерой, а bounding box сохраняет его размер на холсте. Вся анимация считается в доке.</p>
+      <p class="note ok">Всё остаётся на вашем компьютере. Док подключается только к <code>127.0.0.1</code>, то есть к вашему OBS.</p>
+    </section>
+
+    <section id="faq">
+      <h2>Вопросы и решение проблем</h2>
+      <details class="faq"><summary>Панель пишет «Не удалось подключиться»</summary><p>Проверьте, что WebSocket-сервер включён в настройках сервера WebSocket, порт 4455, а пароль точно тот, что показан в «Показать сведения о подключении».</p></details>
+      <details class="faq"><summary>Панель пустая / белая</summary><p>Неверный путь к файлу в адресе дока. Он должен начинаться с <code>file:///</code>, идти с прямыми слэшами и указывать на <code>index.html</code> внутри распакованной папки.</p></details>
+      <details class="faq"><summary>Превью чёрное или зум ничего не делает</summary><p>Проверьте, что в настройках выбран правильный элемент и камера действительно работает в OBS. Нажмите ⟳, чтобы обновить списки.</p></details>
+      <details class="faq"><summary>В одной сцене зум работает, а в другой нет</summary><p>Нажмите ⟳ в настройках. Панель заново просканирует все сцены и найдёт каждую копию веб-камеры.</p></details>
+      <details class="faq"><summary>Как удалить?</summary><p>Нажмите «Вернуть исходный вид», затем удалите док в Доки → Пользовательские браузерные доки и удалите папку.</p></details>
+      <details class="faq"><summary>Это плагин? Это безопасно?</summary><p>Это не плагин, а локальная HTML-страница. Она ничего не отправляет в интернет и не открывает веб-камеру напрямую.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>Webcam Zoom для OBS · <a href="https://github.com/siarheikryutsou/webcam-zoom-obs">Исходный код на GitHub</a> · <a href="../" hreflang="en" lang="en">English version</a></p>
+      <p>OBS и OBS Studio — товарные знаки их правообладателей. Проект не связан с OBS Project.</p>
+    </div>
+  </footer>
+</body>
+</html>

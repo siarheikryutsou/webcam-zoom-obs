@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://siarheikryutsou.github.io/webcam-zoom-obs/sitemap.xml
