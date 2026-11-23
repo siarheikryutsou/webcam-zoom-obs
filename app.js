@@ -405,7 +405,8 @@ setInterval(() => {
 }, 1000 / 60);
 
 // ---------- UI ----------
-el.connect.addEventListener('click', connect);
+// Кнопка живёт в <summary>: гасим клик, чтобы панель не сворачивалась/разворачивалась
+el.connect.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); connect(); });
 el.scene.addEventListener('change', () => loadItems().catch((e) => info(e.message)));
 el.item.addEventListener('change', () => selectItem().catch((e) => info(e.message)));
 el.refresh.addEventListener('click', () => connected && loadScenes().catch((e) => info(e.message)));

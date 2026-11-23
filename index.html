@@ -8,11 +8,14 @@
 </head>
 <body>
   <details id="settings" open>
-    <summary>Подключение <span id="status" class="status off">offline</span></summary>
+    <summary>
+      <span>Подключение</span>
+      <span id="status" class="status off">offline</span>
+      <button id="connect" type="button">Подключить</button>
+    </summary>
     <div class="row">
       <input id="url" placeholder="ws://127.0.0.1:4455" title="Адрес WebSocket-сервера OBS">
       <input id="password" type="password" placeholder="пароль" title="Пароль WebSocket-сервера OBS">
-      <button id="connect">Подключить</button>
     </div>
     <div class="row">
       <select id="scene" title="Сцена"></select>
