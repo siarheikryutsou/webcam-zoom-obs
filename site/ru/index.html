@@ -36,7 +36,7 @@
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "description": "Панель (браузерный док) для OBS Studio, которая плавно приближает веб-камеру к точке, где зажата мышь. Работает через встроенный obs-websocket, без плагинов.",
         "url": "https://siarheikryutsou.github.io/webcam-zoom-obs/ru/",
-        "downloadUrl": "https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip",
+        "downloadUrl": "https://github.com/siarheikryutsou/webcam-zoom-obs/releases/latest/download/webcam-zoom-obs.zip",
         "softwareRequirements": "OBS Studio 28 или новее",
         "inLanguage": "ru"
       },
@@ -45,7 +45,7 @@
         "name": "Как сделать плавный зум веб-камеры в OBS Studio",
         "totalTime": "PT5M",
         "step": [
-          { "@type": "HowToStep", "name": "Скачать", "text": "Скачайте ZIP с GitHub и распакуйте в постоянную папку, например C:\\obs-tools\\webcam-zoom-obs." },
+          { "@type": "HowToStep", "name": "Скачать", "text": "Скачайте ZIP с GitHub и распакуйте в постоянную папку, например C:\\obs-tools. Получится C:\\obs-tools\\webcam-zoom-obs с файлом index.html внутри." },
           { "@type": "HowToStep", "name": "Включить WebSocket-сервер", "text": "В OBS откройте Сервис → Настройки сервера WebSocket, включите сервер и скопируйте пароль." },
           { "@type": "HowToStep", "name": "Добавить док", "text": "В OBS откройте Доки → Пользовательские браузерные доки, добавьте док Webcam Zoom с адресом file:///C:/obs-tools/webcam-zoom-obs/index.html." },
           { "@type": "HowToStep", "name": "Подключиться", "text": "В доке введите пароль, нажмите «Подключить» и выберите камеру. Зажмите левую кнопку мыши на превью, чтобы приблизить." }
@@ -85,7 +85,7 @@
       <h1>Плавный <span>зум веб-камеры</span> в OBS: зажал мышку и приблизил эту точку</h1>
       <p class="lead">Webcam Zoom — маленькая панель внутри OBS Studio. В ней видна картинка с камеры. Зажимаешь левую кнопку мыши на лице, руке или предмете, и веб-камера в стриме или записи плавно приближается именно туда. Отпустил, и зум остаётся. Правая кнопка отдаляет.</p>
       <div class="cta">
-        <a class="btn primary" href="https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip">⬇ Скачать ZIP</a>
+        <a class="btn primary" href="https://github.com/siarheikryutsou/webcam-zoom-obs/releases/latest/download/webcam-zoom-obs.zip">⬇ Скачать ZIP</a>
         <a class="btn" href="#install">Установить за 5 минут</a>
         <a class="btn" href="https://github.com/siarheikryutsou/webcam-zoom-obs">GitHub</a>
       </div>
@@ -109,7 +109,7 @@
       <ol class="steps">
         <li>
           <h3>Скачать и распаковать</h3>
-          <p>Нажмите <a href="https://github.com/siarheikryutsou/webcam-zoom-obs/archive/refs/heads/main.zip">Скачать ZIP</a>. Распакуйте в папку, которую не удалите, например <code>C:\obs-tools\webcam-zoom-obs</code>. Внутри должен лежать файл <code>index.html</code>.</p>
+          <p>Нажмите <a href="https://github.com/siarheikryutsou/webcam-zoom-obs/releases/latest/download/webcam-zoom-obs.zip">Скачать ZIP</a>. Распакуйте в папку, которую не удалите, например в <code>C:\obs-tools</code>. Получится папка <code>C:\obs-tools\webcam-zoom-obs</code>, а внутри неё файл <code>index.html</code>.</p>
         </li>
         <li>
           <h3>Включить WebSocket-сервер в OBS</h3>

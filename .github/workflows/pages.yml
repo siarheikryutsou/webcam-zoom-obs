@@ -17,6 +17,8 @@ concurrency:
 
 jobs:
   deploy:
+    # Pages на бесплатном плане работает только для публичных репозиториев
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -1,0 +1,24 @@
+name: Release
+
+# Пуш тега вида v1.2.3 собирает ZIP с панелью и публикует GitHub Release.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build ZIP
+        run: |
+          git archive --format=zip --prefix=webcam-zoom-obs/ -o webcam-zoom-obs.zip HEAD \
+            index.html app.js style.css vendor README.md
+          unzip -l webcam-zoom-obs.zip
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" webcam-zoom-obs.zip --title "$GITHUB_REF_NAME" --generate-notes
