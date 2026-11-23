@@ -355,8 +355,9 @@ setInterval(() => {
   if (st.holding === 1) {        // ЛКМ: приближаем к курсору
     st.tZoom = Math.min(cfg.maxZoom, st.tZoom * Math.exp(cfg.speed * dt));
     st.tCx = st.px; st.tCy = st.py;
-  } else if (st.holding === -1) { // ПКМ: отдаляем, центр не трогаем
+  } else if (st.holding === -1) { // ПКМ: отдаляем, тоже следуя за курсором
     st.tZoom = Math.max(1, st.tZoom * Math.exp(-cfg.speed * dt));
+    st.tCx = st.px; st.tCy = st.py;
   }
   st.tZoom = clamp(st.tZoom, 1, cfg.maxZoom);
   clampTargetCenter();
