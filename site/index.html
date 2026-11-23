@@ -162,7 +162,9 @@
       <h2>How it works (for the curious)</h2>
       <p>OBS preview does not pass mouse clicks into sources, and a Browser Source only accepts the mouse through a separate “Interact” window. A <strong>custom browser dock</strong> is a normal interactive web page inside OBS, so Webcam Zoom lives there.</p>
       <p>The dock talks to OBS through <strong>obs-websocket</strong> (built in since OBS 28). It never opens your camera by itself: OBS keeps it. The preview in the dock is a stream of screenshots of the camera source. Zoom is done by changing the <strong>crop</strong> of the camera scene item, while a bounding box keeps its size on the canvas. All the animation runs in the dock.</p>
-      <p class="note ok">Everything stays on your computer. The dock connects only to <code>127.0.0.1</code>, your own OBS.</p>
+      <p class="note ok">Your video, scenes and settings stay on your computer. The dock controls OBS only through <code>127.0.0.1</code>, your own OBS.</p>
+      <h3 id="stats">Anonymous usage statistics</h3>
+      <p>To know whether anyone actually uses the dock, it sends a tiny anonymous ping to <a href="https://www.goatcounter.com/">GoatCounter</a> (privacy-friendly, no cookies) after it connects to OBS: once ever (“installed”) and at most once a day (“active” and the dock version). No names, scenes, images, passwords or settings are sent. You can turn it off with the checkbox <strong>Send anonymous usage statistics</strong> (<span lang="ru">«Отправлять анонимную статистику использования»</span>) in the dock settings.</p>
     </section>
 
     <section id="faq">
@@ -172,7 +174,7 @@
       <details class="faq"><summary>The preview is black or the zoom does nothing</summary><p>Make sure the right item is selected in the settings and the camera is actually working in OBS. Press ⟳ to refresh the lists.</p></details>
       <details class="faq"><summary>Zoom works in one scene but not in another</summary><p>Press ⟳ in the settings. The panel will rescan all scenes and pick up every copy of the webcam.</p></details>
       <details class="faq"><summary>How do I remove it?</summary><p>Click Restore original view, then remove the dock in Docks → Custom Browser Docks and delete the folder.</p></details>
-      <details class="faq"><summary>Is it an OBS plugin? Is it safe?</summary><p>It's not a plugin, it's a local HTML page. It does not send anything to the internet and does not open your webcam directly.</p></details>
+      <details class="faq"><summary>Is it an OBS plugin? Is it safe?</summary><p>It's not a plugin, it's a local HTML page. It does not open your webcam directly and sends nothing but an optional anonymous usage ping, see <a href="#stats">usage statistics</a>.</p></details>
     </section>
   </main>
 

@@ -15,8 +15,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build ZIP
         run: |
-          git archive --format=zip --prefix=webcam-zoom-obs/ -o webcam-zoom-obs.zip HEAD \
-            index.html app.js style.css vendor README.md
+          VERSION="${GITHUB_REF_NAME#v}"
+          mkdir -p dist/webcam-zoom-obs
+          cp -r index.html app.js style.css vendor README.md dist/webcam-zoom-obs/
+          sed -i "s/^const APP_VERSION = 'dev';/const APP_VERSION = '${VERSION}';/" dist/webcam-zoom-obs/app.js
+          grep -q "APP_VERSION = '${VERSION}'" dist/webcam-zoom-obs/app.js
+          (cd dist && zip -r ../webcam-zoom-obs.zip webcam-zoom-obs)
           unzip -l webcam-zoom-obs.zip
       - name: Publish release
         env:

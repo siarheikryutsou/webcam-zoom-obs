@@ -1,5 +1,8 @@
 'use strict';
 
+// Подставляется из тега при сборке релиза (.github/workflows/release.yml)
+const APP_VERSION = 'dev';
+
 // ---------- настройки ----------
 const LS_KEY = 'webcamZoom.cfg';
 const cfg = Object.assign({
@@ -11,6 +14,7 @@ const cfg = Object.assign({
   maxZoom: 4,
   smooth: 8,      // жёсткость сглаживания: чем больше, тем быстрее догоняет цель
   autoConnect: false,
+  telemetry: true, // анонимная статистика использования, отключается галочкой в настройках
 }, safeParse(localStorage.getItem(LS_KEY)));
 
 function safeParse(s) { try { return JSON.parse(s) || {}; } catch { return {}; } }
@@ -23,7 +27,10 @@ const el = {
   scene: $('scene'), item: $('item'), refresh: $('refresh'),
   speed: $('speed'), maxZoom: $('maxZoom'), smooth: $('smooth'), restore: $('restore'),
   pad: $('pad'), preview: $('preview'), rect: $('rect'), handle: $('handle'), info: $('info'), settings: $('settings'),
+  telemetry: $('telemetry'), version: $('version'),
 };
+el.telemetry.checked = cfg.telemetry;
+el.version.textContent = APP_VERSION === 'dev' ? 'dev' : 'v' + APP_VERSION;
 el.url.value = cfg.url;
 el.password.value = cfg.password;
 el.speed.value = cfg.speed;
@@ -65,6 +72,7 @@ async function connect() {
     setStatus(true);
     cfg.autoConnect = true; saveCfg();
     info('');
+    reportUsage();
     await loadScenes();
     el.settings.open = false;
   } catch (e) {
@@ -73,7 +81,34 @@ async function connect() {
   }
 }
 
-obs.on('ConnectionClosed', () => { setStatus(false); target = null; });
+// ---------- анонимная статистика ----------
+// Только факт использования: событие «первая установка» (один раз) и «активность» + версия
+// (не чаще раза в сутки), после успешного подключения к OBS. Ни сцен, ни имён, ни картинок.
+// Счётчик — GoatCounter, запрос-пиксель; отключается галочкой в настройках.
+const STATS_URL = 'https://siarheikryutsou.goatcounter.com/count';
+const STATS_KEY = 'webcamZoom.stats';
+
+function sendEvent(name) {
+  const q = new URLSearchParams({ p: name, t: name, e: 'true', rnd: Math.random().toString(36).slice(2) });
+  const img = new Image();
+  img.referrerPolicy = 'no-referrer';
+  img.src = `${STATS_URL}?${q}`;
+}
+
+function reportUsage() {
+  if (!cfg.telemetry) return;
+  const s = safeParse(localStorage.getItem(STATS_KEY));
+  const today = new Date().toISOString().slice(0, 10);
+  if (!s.installed) { sendEvent('panel-install'); s.installed = today; }
+  if (s.lastActive !== today) {
+    sendEvent('panel-active');
+    sendEvent('panel-version-' + APP_VERSION);
+    s.lastActive = today;
+  }
+  try { localStorage.setItem(STATS_KEY, JSON.stringify(s)); } catch {}
+}
+
+obs.on('ConnectionClosed',() => { setStatus(false); target = null; });
 
 async function loadScenes() {
   const { scenes, currentProgramSceneName } = await obs.call('GetSceneList');
@@ -411,6 +446,7 @@ el.scene.addEventListener('change', () => loadItems().catch((e) => info(e.messag
 el.item.addEventListener('change', () => selectItem().catch((e) => info(e.message)));
 el.refresh.addEventListener('click', () => connected && loadScenes().catch((e) => info(e.message)));
 el.restore.addEventListener('click', restoreOriginal);
+el.telemetry.addEventListener('change', () => { cfg.telemetry = el.telemetry.checked; saveCfg(); });
 for (const name of ['speed', 'maxZoom', 'smooth']) {
   el[name].addEventListener('input', () => { cfg[name] = Number(el[name].value); saveCfg(); });
 }
