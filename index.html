@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Webcam Zoom</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <details id="settings" open>
+    <summary>Подключение <span id="status" class="status off">offline</span></summary>
+    <div class="row">
+      <input id="url" placeholder="ws://127.0.0.1:4455" title="Адрес WebSocket-сервера OBS">
+      <input id="password" type="password" placeholder="пароль" title="Пароль WebSocket-сервера OBS">
+      <button id="connect">Подключить</button>
+    </div>
+    <div class="row">
+      <select id="scene" title="Сцена"></select>
+      <select id="item" title="Элемент с камерой"></select>
+      <button id="refresh" title="Обновить списки">⟳</button>
+    </div>
+    <div class="row">
+      <label>Скорость <input id="speed" type="range" min="0.2" max="3" step="0.1"></label>
+      <label>Макс. зум <input id="maxZoom" type="range" min="1.5" max="10" step="0.5"></label>
+      <label>Плавность <input id="smooth" type="range" min="2" max="20" step="1"></label>
+    </div>
+    <div class="row">
+      <button id="restore" title="Вернуть элементу исходный transform (до панели)">Вернуть исходный вид</button>
+    </div>
+  </details>
+
+  <div id="pad" tabindex="0">
+    <img id="preview" alt="" draggable="false">
+    <div id="rect"><div id="handle" title="Тяни, чтобы двигать рамку" hidden>✥</div></div>
+    <div id="hint">ЛКМ — зум к точке · ПКМ — отзум · ✥ в углу — двигать · колесо — зум · двойной клик — сброс</div>
+  </div>
+  <div id="info"></div>
+
+  <script src="vendor/obs-ws.global.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
